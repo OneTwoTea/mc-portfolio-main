@@ -1,0 +1,292 @@
+/* ═══════════════════════════════════════════════════════════
+   INPUT.CSS — CSS nguồn Tailwind v4
+   Khai báo theme (màu sắc, font) một lần tại đây.
+   ═══════════════════════════════════════════════════════════ */
+
+@import "tailwindcss";
+
+/* Font Bricolage Grotesque + Be Vietnam Pro nạp từ Google Fonts trong index.html (display=swap) */
+
+/* ─── THEME ────────────────────────────────────────────── */
+@theme {
+  --color-primary: #3A0D1E;        /* đỏ rượu vang đậm */
+  --color-primary-light: #561629;
+  --color-primary-dark: #22060F;
+  --color-accent: #F6E3A8;         /* kem vàng nhạt (màu tiêu đề) */
+  --color-accent-light: #FFF2CC;
+  --color-accent-dark: #DCC283;
+  --color-rose: #C9707F;           /* hồng phấn cho mảng trang trí */
+  --color-text: #FFFFFF;
+  --color-text-muted: #EBCBD2;
+  --color-text-dim: #CFA0AC;      /* tương phản ≥ 4.5:1 trên nền tối (WCAG AA) */
+  --color-surface: #4A1324;
+  --color-surface-light: #6A2038;
+  --color-border: #5E1B30;
+  --color-border-light: #8C3C53;
+
+  --font-heading: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Be Vietnam Pro", "Segoe UI", system-ui, sans-serif;
+
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+
+  --animate-fade-in: fade-in 0.6s var(--ease-smooth) both;
+  --animate-slide-up: slide-up 0.6s var(--ease-smooth) both;
+  --animate-slide-down: slide-down 0.4s var(--ease-smooth) forwards;
+
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes slide-up {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes slide-down {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}
+
+/* ─── BASE ─────────────────────────────────────────────── */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+    -webkit-text-size-adjust: 100%;
+    font-family: var(--font-body);
+    background-color: var(--color-primary);
+    color: var(--color-text);
+  }
+
+  body {
+    min-height: 100svh;
+    overflow-x: clip;
+    overflow-wrap: break-word;
+    font-size: 1rem;
+    /* Nền gradient đỏ rượu vang với các vệt sáng hồng, giống phong cách ảnh mẫu */
+    background:
+      radial-gradient(ellipse 55% 55% at 30% 5%, rgba(232, 150, 162, 0.8), transparent 70%),
+      radial-gradient(ellipse 45% 50% at 75% 60%, rgba(214, 128, 142, 0.55), transparent 70%),
+      radial-gradient(ellipse 50% 40% at 5% 100%, rgba(190, 84, 104, 0.6), transparent 70%),
+      linear-gradient(160deg, #8A3047 0%, #5C1A2E 50%, var(--color-primary) 100%);
+    background-attachment: fixed;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* body là stacking context riêng để lớp grain (z-index âm) nằm trên nền body nhưng dưới nội dung/ảnh */
+  body {
+    isolation: isolate;
+  }
+
+  /* Lớp nhiễu hạt (grain) chỉ phủ nền, không phủ lên ảnh */
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.18;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* Heading font */
+  h1, h2, h3, h4 {
+    font-family: var(--font-heading);
+    letter-spacing: -0.02em;
+  }
+
+  /* Selection color */
+  ::selection {
+    background-color: var(--color-accent);
+    color: var(--color-primary);
+  }
+
+  /* Focus styles */
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-primary);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-surface-light);
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-accent);
+  }
+}
+
+/* ─── COMPONENTS ───────────────────────────────────────── */
+@layer components {
+  /* Scroll reveal — chỉ ẩn khi JS đã chạy (class "js" gắn trên <html>) */
+  .js .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s var(--ease-smooth), transform 0.6s var(--ease-smooth);
+  }
+  .js .reveal.revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Section label (nhãn nhỏ trên heading) */
+  .section-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin-bottom: 1rem;
+  }
+  .section-label::before {
+    content: "";
+    display: block;
+    width: 2rem;
+    height: 1px;
+    background: var(--color-accent);
+  }
+
+  /* Khung thay thế khi ảnh chưa có: ẩn mặc định, hiện khi ảnh phía trước bị ẩn (onerror) */
+  .img-placeholder {
+    background: linear-gradient(135deg, var(--color-surface) 0%, var(--color-surface-light) 100%);
+    display: none;
+    text-align: center;
+    padding: 0.5rem;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text-dim);
+    font-size: 0.875rem;
+  }
+  img[hidden] + .img-placeholder,
+  picture:has(> img[hidden]) + .img-placeholder {
+    display: flex;
+  }
+
+  /* Chữ tiêu đề màu kem có ánh sáng nhẹ như ảnh mẫu */
+  .text-cream {
+    background: linear-gradient(180deg, #FFF6D8 0%, var(--color-accent) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: none;
+    filter: drop-shadow(0 0 18px rgba(255, 236, 180, 0.35));
+  }
+
+  /* Button styles */
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.875rem 2rem;
+    background: var(--color-accent);
+    color: var(--color-primary);
+    font-weight: 600;
+    border-radius: 9999px;
+    transition: all 0.3s var(--ease-smooth);
+    min-height: 44px;
+    min-width: 44px;
+  }
+  @media (hover: hover) {
+    .btn-primary:hover {
+      background: var(--color-accent-light);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(246, 227, 168, 0.3);
+    }
+  }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.875rem 2rem;
+    border: 1px solid var(--color-accent);
+    color: var(--color-accent);
+    font-weight: 600;
+    border-radius: 9999px;
+    transition: all 0.3s var(--ease-smooth);
+    min-height: 44px;
+    min-width: 44px;
+  }
+  @media (hover: hover) {
+    .btn-secondary:hover {
+      background: var(--color-accent);
+      color: var(--color-primary);
+      transform: translateY(-2px);
+    }
+  }
+
+  /* Lightbox */
+  .lightbox-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background: rgba(0, 0, 0, 0.95);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s var(--ease-smooth);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
+  .lightbox-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* Reduce motion */
+  @media (prefers-reduced-motion: reduce) {
+    .js .reveal {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* ─── UTILITIES ────────────────────────────────────────── */
+@utility text-balance {
+  text-wrap: balance;
+}
+@utility scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+@utility safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+@utility safe-top {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+@utility safe-left {
+  padding-left: env(safe-area-inset-left, 0px);
+}
+@utility safe-right {
+  padding-right: env(safe-area-inset-right, 0px);
+}

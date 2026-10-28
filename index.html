@@ -1,0 +1,99 @@
+<!-- ĐÂY LÀ FILE KHUNG — Không sửa nội dung trực tiếp ở đây.
+     Nội dung lấy từ site.config.js, các khối {{{ @ten }}} do src/templates.js sinh ra.
+     {{ duong.dan }} = chèn giá trị (đã escape), {{{ @tenRenderer }}} = chèn HTML.
+     Build sẽ tự xóa comment này. -->
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  {{{ @seoHead }}}
+  <script>document.documentElement.classList.add("js")</script>
+  <!-- Google Fonts (hỗ trợ tiếng Việt, display=swap, không chặn render) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;600;700&family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap&subset=vietnamese" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;600;700&family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap&subset=vietnamese"></noscript>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="bg-primary text-text font-body antialiased">
+
+  <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[60] focus:bg-accent focus:text-primary focus:px-4 focus:py-3 focus:rounded">Bỏ qua đến nội dung chính</a>
+
+  <!-- ═══ HEADER ═══ -->
+  <header id="site-header" class="fixed top-0 inset-x-0 z-50 transition-colors duration-300 safe-top">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between gap-4 h-16 md:h-20">
+      <!-- Logo -->
+      <a href="#hero" class="flex items-center gap-2 min-w-0 min-h-[44px]">
+        <img src="{{ brand.logo }}" alt="{{ brand.logoAlt }}" class="w-9 h-9 md:w-10 md:h-10 flex-shrink-0" width="40" height="40">
+        <span class="font-heading font-bold text-lg md:text-xl text-text truncate">{{ brand.name }}</span>
+      </a>
+
+      <!-- Menu desktop -->
+      <nav class="hidden lg:flex items-center gap-5 xl:gap-8" aria-label="Menu chính">
+        {{{ @headerNav }}}
+      </nav>
+
+      <!-- CTA desktop -->
+      <a {{{ @ctaAttrs }}} class="hidden lg:inline-flex btn-primary text-sm px-6 py-2.5 flex-shrink-0">
+        {{ header.ctaButton.label }}
+      </a>
+
+      <!-- Nút hamburger (mobile/tablet) -->
+      <button type="button" id="menu-toggle" class="lg:hidden w-11 h-11 -mr-2 flex flex-col items-center justify-center gap-1.5 flex-shrink-0" aria-expanded="false" aria-controls="mobile-menu" aria-label="Mở menu">
+        <span class="block w-6 h-0.5 bg-text transition-transform duration-300"></span>
+        <span class="block w-6 h-0.5 bg-text transition-opacity duration-300"></span>
+        <span class="block w-6 h-0.5 bg-text transition-transform duration-300"></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ═══ MENU MOBILE (toàn màn hình, nằm ngoài header để không bị backdrop-filter giới hạn) ═══ -->
+  <div id="mobile-menu" class="fixed inset-0 z-[45] bg-primary lg:hidden opacity-0 invisible transition-[opacity,visibility] duration-300 overflow-y-auto">
+    <nav class="flex flex-col items-center justify-center min-h-[100svh] gap-1 px-5 pt-20 pb-[max(2rem,env(safe-area-inset-bottom))]" aria-label="Menu mobile">
+      {{{ @mobileNav }}}
+      <a {{{ @ctaAttrs }}} class="btn-primary text-lg px-8 py-4 mt-6 w-full max-w-sm">
+        {{ header.ctaButton.label }}
+      </a>
+    </nav>
+  </div>
+
+  <main id="main">
+    <!-- ═══ HERO ═══ -->
+    {{{ @heroSection }}}
+
+    <!-- ═══ GIỚI THIỆU ═══ -->
+    {{{ @aboutSection }}}
+
+    <!-- ═══ DỊCH VỤ ═══ -->
+    {{{ @servicesSection }}}
+
+    <!-- ═══ VIDEO ═══ -->
+    {{{ @videosSection }}}
+
+    <!-- ═══ GALLERY ═══ -->
+    {{{ @gallerySection }}}
+
+    <!-- ═══ ĐỐI TÁC ═══ -->
+    {{{ @partnersSection }}}
+
+    <!-- ═══ CẢM NHẬN ═══ -->
+    {{{ @testimonialsSection }}}
+
+    <!-- ═══ LIÊN HỆ ═══ -->
+    {{{ @contactSection }}}
+  </main>
+
+  <!-- ═══ FOOTER ═══ -->
+  {{{ @footerSection }}}
+
+  <!-- ═══ NÚT NỔI ═══ -->
+  {{{ @floatingButton }}}
+  {{{ @backToTop }}}
+
+  <!-- ═══ THANH LIÊN HỆ MOBILE ═══ -->
+  {{{ @mobileBottomBar }}}
+
+  <script src="assets/js/main.js" defer></script>
+</body>
+</html>
