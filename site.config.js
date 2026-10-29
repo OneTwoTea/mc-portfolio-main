@@ -27,7 +27,7 @@ export const SITE_CONFIG = {
     ogImageAlt: "MC [TEN_MC] — Dẫn chương trình sự kiện",
     url: "[WEBSITE_URL]",                            // VD: https://ten-ban.github.io/mc-portfolio/
     locale: "vi_VN",
-    themeColor: "#3A0D1E",
+    themeColor: "#601633",
   },
 
   // ─── 2. THÔNG TIN CÁ NHÂN / THƯƠNG HIỆU ──────────────────
@@ -46,7 +46,6 @@ export const SITE_CONFIG = {
       { label: "Giới thiệu", href: "#about" },
       { label: "Dịch vụ", href: "#services" },
       { label: "Video", href: "#videos" },
-      { label: "Gallery", href: "#gallery" },
       { label: "Cảm nhận", href: "#testimonials" },
       { label: "Liên hệ", href: "#contact" },
     ],
@@ -230,6 +229,11 @@ export const SITE_CONFIG = {
         alt: "Chụp ảnh cùng cặp đôi",
         category: "Đám cưới",
       },
+      {
+        src: "public/images/gallery/gallery-04.webp",
+        alt: "MC dẫn chương trình lễ khai trương cửa hàng",
+        category: "Doanh nghiệp",
+      },
     ],
   },
 
@@ -246,6 +250,7 @@ export const SITE_CONFIG = {
       { name: "Công ty D", logo: "public/images/partners/partner-04.webp" },
       { name: "Công ty E", logo: "public/images/partners/partner-05.webp" },
       { name: "Công ty F", logo: "public/images/partners/partner-06.webp" },
+      //thêm logo đối tác khác tại đây bằng cách copy 1 dòng { name: "Tên công ty", logo: "public/images/partners/partner-xx.webp" } và đổi tên công ty + đường dẫn logo
     ],
   },
 

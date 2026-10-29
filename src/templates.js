@@ -475,7 +475,7 @@ export function createRenderers(config) {
 
       const logos = (par.items || [])
         .map(
-          (p) => `<li class="reveal relative flex items-center justify-center h-20 px-4 rounded-lg grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all duration-300">
+          (p) => `<li class="reveal relative flex items-center justify-center h-20 px-4 rounded-lg bg-white shadow-sm hover:-translate-y-0.5 hover:shadow-md transition-all duration-300">
             ${media({ src: p.logo || "", alt: p.name || "Đối tác", cls: "h-12 md:h-14 w-auto max-w-full object-contain", width: 200, height: 80 })}
             ${placeholder(p.name, "absolute inset-0 rounded-lg border border-border text-sm text-text-muted")}
           </li>`
