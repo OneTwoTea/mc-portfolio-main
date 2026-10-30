@@ -9,6 +9,7 @@ import { createServer } from "node:http";
 import { readFileSync, existsSync, watch, statSync } from "node:fs";
 import { join, extname, resolve, dirname, sep } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
+import { networkInterfaces } from "node:os";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -54,6 +55,15 @@ const c = {
   dim: "\x1b[2m",
   bold: "\x1b[1m",
 };
+
+// ─── IP MẠNG LAN ────────────────────────────────────────
+/** Danh sách địa chỉ IPv4 nội bộ (VD 192.168.1.5) để mở thử trên điện thoại cùng Wi-Fi */
+function lanAddresses() {
+  return Object.values(networkInterfaces())
+    .flat()
+    .filter((n) => n && (n.family === "IPv4" || n.family === 4) && !n.internal)
+    .map((n) => n.address);
+}
 
 // ─── BUILD ──────────────────────────────────────────────
 async function runBuild() {
@@ -128,12 +138,16 @@ function startServer() {
     process.exit(1);
   });
 
-  server.listen(PORT, () => {
+  // Lắng nghe 0.0.0.0 để điện thoại cùng Wi-Fi mở được qua IP LAN của máy tính
+  server.listen(PORT, "0.0.0.0", () => {
     console.log("");
     console.log(`${c.cyan}${c.bold}  ╔═══════════════════════════════════════╗${c.reset}`);
     console.log(`${c.cyan}${c.bold}  ║  🚀 Dev Server đang chạy             ║${c.reset}`);
     console.log(`${c.cyan}${c.bold}  ╠═══════════════════════════════════════╣${c.reset}`);
     console.log(`${c.cyan}  ║  ${c.reset}Local:  ${c.green}http://localhost:${PORT}${basePath}/${c.reset}`);
+    for (const ip of lanAddresses()) {
+      console.log(`${c.cyan}  ║  ${c.reset}Mạng LAN (điện thoại): ${c.green}http://${ip}:${PORT}${basePath}/${c.reset}`);
+    }
     if (noWatch) {
       console.log(`${c.cyan}  ║  ${c.reset}Chế độ: ${c.yellow}preview (không theo dõi)${c.reset}`);
     } else {

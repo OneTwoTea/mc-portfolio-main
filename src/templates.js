@@ -655,6 +655,7 @@ export function createRenderers(config) {
         <p class="text-sm text-text-muted">${esc(f.copyright || "")}</p>
         <p class="text-sm text-text-muted">${esc(f.madeWith || "")}</p>
       </div>
+      <p class="mt-6 text-center text-xs text-text-muted">© 2026 ProfileStudio.me. Nền tảng xây dựng hồ sơ cá nhân chuyên nghiệp.</p>
     </div>
   </footer>`;
     },

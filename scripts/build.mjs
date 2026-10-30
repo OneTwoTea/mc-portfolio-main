@@ -40,7 +40,8 @@ function freshImport(...parts) {
 export function cleanDist() {
   const dist = join(ROOT, "dist");
   if (existsSync(dist)) {
-    rmSync(dist, { recursive: true, force: true });
+    // Windows đôi khi khóa file tạm thời (trình duyệt/antivirus) → thử lại vài lần
+    rmSync(dist, { recursive: true, force: true, maxRetries: 5, retryDelay: 150 });
   }
   mkdirSync(dist, { recursive: true });
   log("Đã xóa thư mục dist/");
